@@ -116,4 +116,8 @@ This project demonstrates:
 
 ## Status
 
-This project is complete and deployed. Future enhancements were intentionally deferred to maintain clarity and scope.
+The backend API is deployed using Render and connected to a MongoDB Atlas database.
+
+<!-- This project is complete and deployed. Future enhancements were intentionally deferred to maintain clarity and scope. -->
+
+
