@@ -50,10 +50,12 @@ Each entry includes:
 ### Frontend
 - React (Vite)
 - Custom CSS
+- Link: [http://localhost:5173/]
 
 ### Backend
 - Node.js
 - Express
+- Link: [https://quiet-wins-api.onrender.com/]
 
 ### Database
 - MongoDB
