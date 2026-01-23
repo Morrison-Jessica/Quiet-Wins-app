@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Base API url = Render.com backend url
-const API_URL = 'https://quiet-wins-api.onrender.com/api/wins'; // page endpoint
+const API_URL = import.meta.env.VITE_API_URL; // page endpoint
 
 function Home() {
   // State to stores list of wins

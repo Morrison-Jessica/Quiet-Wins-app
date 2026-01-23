@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'; // Redirects and gets URL params
 
-const API_URL = 'https://YOUR-BACKEND-URL.onrender.com/api/wins';
+const API_URL = import.meta.env.VITE_API_URL;
 
 function EditWin() {
   // Get ID from URL (/edit/:id)

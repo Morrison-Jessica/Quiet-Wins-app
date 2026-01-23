@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Redirects user
 
 // Render.com backend url
-const API_URL = 'https://quiet-wins-api.onrender.com/api/wins';
+const API_URL = import.meta.env.VITE_API_URL;
 
 function NewWin() {
      // Redirects user after submitting form
