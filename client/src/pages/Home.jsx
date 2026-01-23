@@ -37,7 +37,7 @@ const deleteWin = async (id) => { // Use win ID
       <Link to="/new">Add New Win</Link>
 
       {wins.map((win) => (
-        <div key={win._id}>
+        <div key={win._id} data-win>
           <h3>{win.title}</h3>
           <p>{win.category}</p>
           <p>{win.reflection}</p>
