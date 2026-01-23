@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Redirects user
 
 // Render.com backend url
-const API_URL = 'https://quiet-wins-api.onrender.com/';
+const API_URL = 'https://quiet-wins-api.onrender.com/api/wins';
 
 function NewWin() {
      // Redirects user after submitting form
@@ -22,8 +22,10 @@ function NewWin() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }, // Tells server sending JSON
         body: JSON.stringify({ title, category, reflection }),
+        
       });
-  
+      console.log({ title, category, reflection });
+
     // Redirects back to home page after saving
       navigate('/');
     };
@@ -60,3 +62,9 @@ function NewWin() {
   }
   
   export default NewWin;
+
+
+// GET    /api/wins
+// POST   /api/wins
+// PUT    /api/wins/:id
+// DELETE /api/wins/:id

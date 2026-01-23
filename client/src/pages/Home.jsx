@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Base API url = Render.com backend url
-const API_URL = 'https://quiet-wins-api.onrender.com/';
+const API_URL = 'https://quiet-wins-api.onrender.com/api/wins'; // page endpoint
 
 function Home() {
   // State to stores list of wins
@@ -41,6 +41,10 @@ const deleteWin = async (id) => { // Use win ID
           <h3>{win.title}</h3>
           <p>{win.category}</p>
           <p>{win.reflection}</p>
+          {/* Edit link passes ID */}
+          <Link to={`/edit/${win._id}`}>
+            <button>Edit</button>
+          </Link>
           <button onClick={() => deleteWin(win._id)}>Delete</button>
         </div>
       ))}
