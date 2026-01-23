@@ -50,7 +50,7 @@ Each entry includes:
 ### Frontend
 - React (Vite)
 - Custom CSS
-- Link: [http://localhost:5173/]
+- Link: [https://quiet-wins-app.netlify.app/]
 
 ### Backend
 - Node.js
@@ -120,6 +120,6 @@ This project demonstrates:
 
 The backend API is deployed using Render and connected to a MongoDB Atlas database.
 
-<!-- This project is complete and deployed. Future enhancements were intentionally deferred to maintain clarity and scope. -->
+This project is complete and deployed. Future enhancements were intentionally deferred to maintain clarity and scope.
 
 
