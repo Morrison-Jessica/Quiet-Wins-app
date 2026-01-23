@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import NewWin from './pages/NewWin';
 import EditWin from './pages/EditWin';
+import './styles.css';
+
 
 // Function sets up Routing for app
 function App() {

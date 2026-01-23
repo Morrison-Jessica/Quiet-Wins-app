@@ -1,0 +1,75 @@
+/* === Global resets & readable fonts === */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f8fa;
+    color: #222;
+    line-height: 1.6;
+  }
+  
+  /* === Main container spacing === */
+  div {
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    max-width: 800px;
+  }
+  
+  /* === Headings === */
+  h1, h2, h3 {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #111;
+  }
+  
+  /* === Paragraphs === */
+  p {
+    margin-bottom: 1rem;
+  }
+  
+  /* === Buttons === */
+  button {
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #5c6bc0;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #3f51b5;
+  }
+  
+  /* === Inputs & Textareas === */
+  input, textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  /* === Links === */
+  a {
+    text-decoration: none;
+    color: #5c6bc0;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* === Home page cards === */
+  div[data-win] {
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  
