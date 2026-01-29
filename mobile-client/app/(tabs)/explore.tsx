@@ -1,6 +1,5 @@
 // app/(tabs)/explore.tsx
 // ExploreScreen displays all Quiet Wins from the API in a list
-
 import { FlatList, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useAPI } from "../../hooks/useAPI";  // Hook to fetch API data
 

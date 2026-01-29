@@ -1,10 +1,31 @@
-import { Stack } from "expo-router";
-import { View } from "react-native";
+import { Tabs } from "expo-router";
+import { Text } from "react-native";
 
-export default function Layout() {
+export default function TabLayout() {
   return (
-    <View style={{ flex: 1 }}>
-      <Stack screenOptions={{ headerShown: true }} />
-    </View>
+    <Tabs
+      screenOptions={{
+        headerShown: true,  // Show top header
+        tabBarActiveTintColor: "blue", 
+      }}
+    >
+      {/* Home Tab */}
+      <Tabs.Screen
+        name="index"  // corresponds to index.tsx
+        options={{
+          title: "Home",
+          tabBarLabel: "Home",
+        }}
+      />
+
+      {/* Explore Tab */}
+      <Tabs.Screen
+        name="explore"  // corresponds to explore.tsx
+        options={{
+          title: "Explore",
+          tabBarLabel: "Explore",
+        }}
+      />
+    </Tabs>
   );
 }

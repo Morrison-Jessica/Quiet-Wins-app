@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 
+
 // Generic API hook for CRUD
 export const useAPI = <T,>(endpoint: string) => {
   // State holds API data (GET results)
   const [data, setData] = useState<T | null>(null);
-
   // Tracks loading state
   const [loading, setLoading] = useState(true);
 
@@ -36,8 +36,8 @@ export const useAPI = <T,>(endpoint: string) => {
         body: JSON.stringify(body), // Send data to API
       });
 
-      await response.json(); // Optional: read response
-      fetchData();           // Refresh list after create
+      await response.json(); 
+      fetchData();  // Refresh list after create
     } catch (error) {
       console.error("POST error:", error);
     }

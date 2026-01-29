@@ -3,8 +3,8 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native"; // Wraps the entire app to enable navigation
 import { createNativeStackNavigator } from "@react-navigation/native-stack"; // Stack-based navigation
 import ExploreScreen from "./app/(tabs)/explore"; // Screen to view all wins
-import AddWinScreen from "./app/screens/AddWinScreen";   // Screen to add a new win
-import EditWinScreen from "./app/screens/EditWinScreen"; // Screen to edit an existing win
+import saveWin from "./screens/AddEditScreen";   // Screen to add new/edit win
+
 
 // Create a stack navigator instance
 const Stack = createNativeStackNavigator();
@@ -30,12 +30,12 @@ export default function App() {
         />
         <Stack.Screen
           name="AddWin"  
-          component={AddWinScreen}  // Create a new win
+          component={saveWin}  // Create a new win
           options={{ title: "Add a New Win" }}
         />
         <Stack.Screen
           name="EditWin"  
-          component={EditWinScreen}  // Update/delete existing win
+          component={saveWin}  // Update/delete existing win
           options={{ title: "Edit Win" }}
         />
       </Stack.Navigator>
