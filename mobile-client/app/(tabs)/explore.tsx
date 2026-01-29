@@ -1,51 +1,72 @@
-import { ScrollView, View, Text, StyleSheet } from "react-native";
+// app/(tabs)/explore.tsx
+// ExploreScreen displays all Quiet Wins from the API in a list
+
+import { FlatList, View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useAPI } from "../../hooks/useAPI";  // Hook to fetch API data
+
+
+interface Win {
+  _id: string;        // MongoDB unique id
+  title: string;      // Win title
+  category: string;   // Win category
+  reflection: string; // Win text
+  created_at: string;  // Timestamp
+}
 
 export default function ExploreScreen() {
+  // Fetch data from backend 
+  const { data, loading, fetchData } = useAPI<Win[]>("/wins");
+
+  // Loading indicator while waiting
+  if (loading) return <Text>Loading...</Text>;
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>Explore</Text>
+    // FlatList renders scrollable list of wins
+    <FlatList<Win> style={{ flex: 1 }}
+      data={data || []} // Ensure data is always an array, avoids runtime errors
+      keyExtractor={(item) => item._id} // Unique key for each item
+      contentContainerStyle={styles.container} // Padding around list 
+      renderItem={({ item }) => (
+        <View style={styles.card}> 
+          {/* Display win title */}
+          <Text style={styles.title}>{item?.title}</Text>
 
-      <Text style={styles.body}>
-        This is your Explore screen. All asset references have been removed.
-      </Text>
+          {/* Display win category */}
+          <Text>{item.category}</Text>
 
-      <View style={styles.placeholderImage}>
-        <Text style={{ textAlign: "center", color: "#555" }}>
-          [Image Placeholder]
-        </Text>
-      </View>
+          {/* Display the reflection text */}
+          <Text>{item.reflection}</Text>
 
-      <Text style={styles.body}>
-        You can link to external resources here without referencing deleted images.
-      </Text>
-    </ScrollView>
+          {/* Optional: example Edit button */}
+          <TouchableOpacity onPress={() => console.log("Edit win:", item._id)}>
+            <Text style={styles.edit}>Edit</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+        // Pull-to-refresh props
+        refreshing={loading}
+        onRefresh={fetchData}
+    />
   );
 }
 
+// Simple styles for the FlatList and items
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    padding: 20,
-    backgroundColor: "#f4f4f4",
-    alignItems: "center",
-    justifyContent: "center"
+    padding: 20, // Space around the whole list
   },
-  header: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 20
+  card: {
+    backgroundColor: "#fff",   // White background for each win card
+    padding: 15,               // Inner padding for content
+    marginBottom: 10,          // Space between cards
+    borderRadius: 10,          // Rounded corners
   },
-  body: {
-    fontSize: 16,
-    textAlign: "center",
-    marginBottom: 20
+  title: {
+    fontWeight: "bold",        // Bold for title
+    marginBottom: 5,           // Space under title
   },
-  placeholderImage: {
-    width: 100,
-    height: 100,
-    backgroundColor: "#ddd",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20
-  }
+  edit: {
+    color: "blue",             // Visual cue for button
+    marginTop: 5,              // Space above the button
+  },
 });

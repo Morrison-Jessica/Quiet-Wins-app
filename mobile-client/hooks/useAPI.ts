@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 
 // Hook to fetch data from API endpoint
-export const useAPI = (endpoint: string) => {
+export const useAPI = <T,>(endpoint: string) => {
   // Holds the data returned from API
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<T | null>(null);   //  TypeScript now knows data is T
   // Tracks loading state for UI feedback
   const [loading, setLoading] = useState(true);
 
