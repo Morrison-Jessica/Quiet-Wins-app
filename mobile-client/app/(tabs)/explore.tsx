@@ -14,8 +14,8 @@ interface Win {
 }
 
 export default function ExploreScreen() {
-  // Fetch data from backend 
-  const { data, loading, fetchData } = useAPI<Win[]>("/wins");
+  // Fetch data from backend (read only)
+  const { data, loading, fetchData } = useAPI<Win[]>("/wins");  
 
   // Loading indicator while waiting
   if (loading) return <Text>Loading...</Text>;

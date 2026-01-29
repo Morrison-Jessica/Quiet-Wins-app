@@ -1,30 +1,94 @@
 import { useState, useEffect } from "react";
 
-// Hook to fetch data from API endpoint
+// Generic API hook for CRUD
 export const useAPI = <T,>(endpoint: string) => {
-  // Holds the data returned from API
-  const [data, setData] = useState<T | null>(null);   //  TypeScript now knows data is T
-  // Tracks loading state for UI feedback
+  // State holds API data (GET results)
+  const [data, setData] = useState<T | null>(null);
+
+  // Tracks loading state
   const [loading, setLoading] = useState(true);
 
-  // Function to fetch data from API
+ // =============================
+ // ======= GET ALL ITEMS =======
+ // =============================
   const fetchData = async () => {
     try {
-      const response = await fetch(endpoint); // Call API
-      const json = await response.json();     // Parse JSON response
-      setData(json);                           // Save data to state
+      const response = await fetch(endpoint); // GET request
+      const json = await response.json();     // Convert response to JSON
+      setData(json);                          // Save data to state
     } catch (error) {
-      console.error(error);                    // Log any errors
+      console.error("GET error:", error);
     } finally {
-      setLoading(false);                       // Stop loading spinner
+      setLoading(false);
     }
   };
 
-  // Runs fetchData() when the hook is first used or endpoint changes
+  // ============================
+  // ========= POST ITEM ========
+  // ============================
+  const postData = async (body: Partial<T>) => {
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body), // Send data to API
+      });
+
+      await response.json(); // Optional: read response
+      fetchData();           // Refresh list after create
+    } catch (error) {
+      console.error("POST error:", error);
+    }
+  };
+
+  // ===============================
+  // ======= PATCH/EDIT ITEM =======
+  // ===============================
+  const patchData = async (id: string, body: Partial<T>) => {
+    try {
+      await fetch(`${endpoint}/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      fetchData(); // Refresh list after update
+    } catch (error) {
+      console.error("PATCH error:", error);
+    }
+  };
+
+  // ============================
+  // ======= DELETE ITEM ========
+  // ============================
+  const deleteData = async (id: string) => {
+    try {
+      await fetch(`${endpoint}/${id}`, {
+        method: "DELETE",
+      });
+
+      fetchData(); // Refresh list after delete
+    } catch (error) {
+      console.error("DELETE error:", error);
+    }
+  };
+
+  // Run GET on first load or when endpoint changes
   useEffect(() => {
     fetchData();
   }, [endpoint]);
 
-  // Return data, loading state, and fetchData for manual refresh
-  return { data, loading, fetchData };
+  // Everything the app can use
+  return {
+    data,
+    loading,
+    fetchData,
+    postData,
+    patchData,
+    deleteData,
+  };
 };
