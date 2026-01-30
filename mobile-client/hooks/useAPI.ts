@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+// ** NOTE - EVERY fetch must use API_BASE + endpoint!!
+const API_BASE = "https://your-app-name.onrender.com";
 
 // Generic API hook for CRUD
 export const useAPI = <T,>(endpoint: string) => {
@@ -13,8 +15,16 @@ export const useAPI = <T,>(endpoint: string) => {
  // =============================
   const fetchData = async () => {
     try {
-      const response = await fetch(endpoint); // GET request
-      const json = await response.json();     // Convert response to JSON
+      const response = await fetch(`${API_BASE}${endpoint}`);
+ // GET request
+
+          // Read raw text first
+    const text = await response.text();
+    console.log("RAW RESPONSE:", text);
+
+          // Only parse if text exists
+      const json = text ? JSON.parse(text) : [];
+      // Convert response to JSON
       setData(json);                          // Save data to state
     } catch (error) {
       console.error("GET error:", error);
@@ -28,7 +38,7 @@ export const useAPI = <T,>(endpoint: string) => {
   // ============================
   const postData = async (body: Partial<T>) => {
     try {
-      const response = await fetch(endpoint, {
+      const response = await fetch(`${API_BASE}${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +58,7 @@ export const useAPI = <T,>(endpoint: string) => {
   // ===============================
   const patchData = async (id: string, body: Partial<T>) => {
     try {
-      await fetch(`${endpoint}/${id}`, {
+      await fetch(`${API_BASE}${endpoint}/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +77,7 @@ export const useAPI = <T,>(endpoint: string) => {
   // ============================
   const deleteData = async (id: string) => {
     try {
-      await fetch(`${endpoint}/${id}`, {
+      await fetch(`${API_BASE}${endpoint}/${id}`, {
         method: "DELETE",
       });
 

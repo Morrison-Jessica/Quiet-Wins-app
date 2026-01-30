@@ -1,60 +1,29 @@
 // app/screens/AddWinScreen.tsx
 import { useState, useEffect } from "react";
-import { useLocalSearchParams } from "expo-router";  // params from route tell this screen why it was opened, to add or edit...
-import { View, Text, TextInput, Button,  TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { useLocalSearchParams, useRouter } from "expo-router";  // params from route tell this screen why it was opened, to add or edit...
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { useAPI } from "../hooks/useAPI"; 
 
 
 
-
-// interface Win {
-//   _id: string;
-//   title: string;
-//   category: string;
-//   reflection: string;
-//   created_at: string;
-// }
-
-// export default function AddEditScreen() {
-//   
-
-
-//   // Get postData from useAPI for creating new wins
-//   const { postData } = useAPI<Win[]>("/wins");
-
-//   // Function to handle form submission
-//   const handleSubmit = async () => {
-//     if (!title || !category || !reflection) {
-//       Alert.alert("Error", "Please fill out all fields"); // Form validation
-//       return;
-//     }
-
-//     // Send new win to API
-//     await postData({
-//       title,
-//       category,
-//       reflection,
-//       created_at: new Date().toISOString(), // Timestamp
-//     });
-
-//     // Navigate back to the explore screen after adding
-//     navigation.goBack();
-//   };
-
-
 export default function AddEditScreen() {
-  // == State holds the input values from the form ==
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [reflection, setReflection] = useState("");
-
+  const router = useRouter(); // lets us go back
   // == "Read" route params passed to this screen ==
   const params = useLocalSearchParams();
+
   // If editing, win is passed as a JSON string
   const winParam = params.win as string | undefined;
   // Convert JSON string to object, (winParam) means only ? if it exists
   const win = winParam ? JSON.parse(winParam) : null;
   // const win - js object used when editing an existing win
+
+   // == State holds the input values from the form ==
+   const [title, setTitle] = useState("");
+   const [category, setCategory] = useState("");
+   const [reflection, setReflection] = useState("");
+
+  // CRUD functions from useAPI hook now supports postData and patchData
+  const { postData, patchData } = useAPI("/wins"); 
 
 // Runs once when the component mounts or when 'win' changes
 useEffect(() => {
@@ -65,13 +34,9 @@ useEffect(() => {
   }
 }, [win]);  // Dependency array ensures it runs when 'win' changes
 
-
-// CRUD functions from useAPI hook now supports postData and patchData
-const { postData, patchData } = useAPI("/wins"); 
 // =========================== 
 // ====== Save function ====== 
 // =========================== 
-
 const saveWin = async () => {  // Handles both Add and Edit
   // Collect form data
   const formData = {
@@ -85,7 +50,7 @@ const saveWin = async () => {  // Handles both Add and Edit
     // =====================
     // ===== Edit mode =====
     // =====================
-      await patchData(win._id, formData); // PATCH to backend
+      await patchData(`/wins/${win._id}`, formData); // PATCH to backend
       Alert.alert("Success", "Win updated successfully!");
     } else {  // if does not exist...
     // ====================
