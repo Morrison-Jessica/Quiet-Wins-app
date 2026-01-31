@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+
+# Environment files
+.env
+
+# Expo/React Native
+.expo/
+.expo-shared/
+
+# Mac system files
+.DS_Store

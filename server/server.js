@@ -23,7 +23,14 @@ const PORT = process.env.PORT || 3000;
 // ========== Middleware ==========
 // ================================
 // Allows cross-origin requests
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
+
 // Parse incoming JSON data
 app.use(express.json());
 
