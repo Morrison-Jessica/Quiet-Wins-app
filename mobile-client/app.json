@@ -1,27 +1,20 @@
 {
   "expo": {
     "name": "Quiet Wins",
-    "slug": "quiet-wins-mobile",
+    "slug": "mobile-client",
     "scheme": "quietwins",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
-
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jlmorrison.ios.quietwins"
+      "bundleIdentifier": "com.jlmorrison.quietwins"
     },
-
     "android": {
       "package": "com.jlmorrison.quietwins"
     },
-
-    "plugins": ["expo-router"],
-
-    "extra": {
-      "eas": {
-        "projectId": "f9612328-a158-471b-a9b7-b3fb7f967b85"
-      }
-    }
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
