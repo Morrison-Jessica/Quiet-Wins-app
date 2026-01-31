@@ -1,8 +1,8 @@
 // app/screens/AddWinScreen.tsx
 import { useState, useEffect } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";  // params from route tell this screen why it was opened, to add or edit...
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
-import { useAPI } from "../hooks/useAPI"; 
+import { View, Text, TextInput, ScrollView, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { useAPI } from "../../hooks/useAPI"; 
 
 
 
@@ -75,30 +75,31 @@ const saveWin = async () => {  // Handles both Add and Edit
       {/* Screen title */}
       <Text style={styles.heading}>Quiet Win</Text>
 
-      {/* Win Title input */}
-      <TextInput
-        placeholder="Title"
-        value={title}
-        onChangeText={setTitle} // updates title state
-        style={styles.input}
-      />
-
-      {/* Win Category input */}
-      <TextInput
-        placeholder="Category"
-        value={category}
-        onChangeText={setCategory}
-        style={styles.input}
-      />
-
-      {/* Win Reflection input */}
-      <TextInput
-        placeholder="Reflection"
-        value={reflection}
-        onChangeText={setReflection}
-        style={[styles.input, styles.textArea]}
-        multiline
-      />
+      <ScrollView  style={styles.container}
+      keyboardShouldPersistTaps="handled">
+        {/* Win Title input */}
+        <TextInput
+          placeholder="Title"
+          value={title}
+          onChangeText={setTitle} // updates title state
+          style={styles.input}
+        />
+        {/* Win Category input */}
+        <TextInput
+          placeholder="Category"
+          value={category}
+          onChangeText={setCategory}
+          style={styles.input}
+        />
+        {/* Win Reflection input */}
+        <TextInput
+          placeholder="Reflection"
+          value={reflection}
+          onChangeText={(text) => setReflection(text)}
+          multiline
+          style={[styles.input, styles.textArea]}
+        />
+      </ScrollView>
 
       {/* Save button uses saveWin to call correct API method POST vs PATCH */}
       <TouchableOpacity style={styles.button} onPress={saveWin}>

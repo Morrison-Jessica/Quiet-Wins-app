@@ -3,7 +3,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native"; // Wraps the entire app to enable navigation
 import { createNativeStackNavigator } from "@react-navigation/native-stack"; // Stack-based navigation
 import ExploreScreen from "./app/(tabs)/explore"; // Screen to view all wins
-import saveWin from "./screens/AddEditScreen";   // Screen to add new/edit win
+import saveWin from "./app/screens/AddEditScreen";   // Screen to add new/edit win
 
 
 // Create a stack navigator instance

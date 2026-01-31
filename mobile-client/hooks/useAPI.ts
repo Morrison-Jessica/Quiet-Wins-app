@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // ** NOTE - EVERY fetch must use API_BASE + endpoint!!
-const API_BASE = "https://your-app-name.onrender.com";
+const API_BASE = "https://your-app-name.onrender.com/api";
 
 // Generic API hook for CRUD
 export const useAPI = <T,>(endpoint: string) => {

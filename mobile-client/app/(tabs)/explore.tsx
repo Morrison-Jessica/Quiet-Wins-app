@@ -30,12 +30,14 @@ export default function ExploreScreen() {
       <View style={{ padding: 20 }}>
         <TouchableOpacity
           style={styles.addButton}
-          onPress={() => router.push("/screens/AddEditScreen")}
+          onPress={() => router.push("screens/AddEditScreen")}
           // push = go forward onto the stack
         >
           <Text style={styles.addButtonText}>+ Add Win</Text>
         </TouchableOpacity>
       </View>
+
+      
     {/* FlatList renders scrollable list of wins */}
       <FlatList<Win> style={{ flex: 1 }}
         data={data || []} // Ensures data is always an array, avoids runtime errors
