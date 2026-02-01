@@ -60,13 +60,27 @@ export const useAPI = <T,>(endpoint: string) => {
   // ===============================
   const patchData = async (id: string, body: Partial<T>) => {
     try {
-      await fetch(`${API_BASE}${endpoint}/${id}`, {
+      const response = await fetch(`${API_BASE}${endpoint}/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
       });
+
+      console.log("PATCH URL:", `${API_BASE}${endpoint}/${id}`);
+      console.log("PATCH body:", body);
+      console.log("PATCH status:", response.status, response.statusText);
+
+      if (!response.ok) {
+        const text = await response.text(); 
+        console.error("PATCH failed:", text);
+        return;
+      }
+  
+      const updated = await response.json();
+      console.log("PATCH success response:", updated);
+
 
       fetchData(); // Refresh list after update
     } catch (error) {

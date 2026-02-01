@@ -50,7 +50,13 @@ const saveWin = async () => {  // Handles both Add and Edit
     // =====================
     // ===== Edit mode =====
     // =====================
-      await patchData(`/wins/${win._id}`, formData); // PATCH to backend
+      await patchData(`win._id`, formData); // PATCH to backend - patchData function already appends the ID - /wins/${win._id} not needed
+      console.log("Saving edit for win ID:", win._id);
+      console.log("Payload:", formData);
+      // logs for debugging
+      await patchData(win._id, formData);
+      router.push("./(tabs)/explore");  // sends back to explore tab
+
       Alert.alert("Success", "Win updated successfully!");
     } else {  // if does not exist...
     // ====================
