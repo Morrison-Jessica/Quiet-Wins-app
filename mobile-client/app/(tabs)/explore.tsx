@@ -52,7 +52,12 @@ export default function ExploreScreen() {
             {/* Display the reflection text */}
             <Text>{item.reflection}</Text>
             {/* Optional: example Edit button */}
-            <TouchableOpacity onPress={() => console.log("Edit win:", item._id)}>
+            <TouchableOpacity onPress={() => router.push({ pathname: "screens/AddEditScreen",
+            params: { win: JSON.stringify(item),
+                  },
+                })
+              }
+            >
               <Text style={styles.edit}>Edit</Text>
             </TouchableOpacity>
           </View>

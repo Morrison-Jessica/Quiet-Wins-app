@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // ** NOTE - EVERY fetch must use API_BASE + endpoint!!
-const API_BASE = "https://your-app-name.onrender.com/api";
+const API_BASE = "https://quiet-wins-api.onrender.com/api";
 
 // Generic API hook for CRUD
 export const useAPI = <T,>(endpoint: string) => {
@@ -16,18 +16,20 @@ export const useAPI = <T,>(endpoint: string) => {
   const fetchData = async () => {
     try {
       const response = await fetch(`${API_BASE}${endpoint}`);
- // GET request
+    // GET request
+    // Check if the request was successful
+    if (!response.ok) {
+      console.error("GET error:", response.status, response.statusText);
+      setData([] as T); // fallback to empty array
+      return;
+    }
+    // Parse JSON directly (if response is ok)
+    const json = await response.json();
+    setData(json);
 
-          // Read raw text first
-    const text = await response.text();
-    console.log("RAW RESPONSE:", text);
-
-          // Only parse if text exists
-      const json = text ? JSON.parse(text) : [];
-      // Convert response to JSON
-      setData(json);                          // Save data to state
     } catch (error) {
       console.error("GET error:", error);
+      setData([] as T); // fallback if fetch itself fails
     } finally {
       setLoading(false);
     }
@@ -59,7 +61,7 @@ export const useAPI = <T,>(endpoint: string) => {
   const patchData = async (id: string, body: Partial<T>) => {
     try {
       await fetch(`${API_BASE}${endpoint}/${id}`, {
-        method: "PATCH",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },

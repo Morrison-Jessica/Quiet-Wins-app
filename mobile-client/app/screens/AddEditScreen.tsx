@@ -27,12 +27,12 @@ export default function AddEditScreen() {
 
 // Runs once when the component mounts or when 'win' changes
 useEffect(() => {
-  if (win) {  // If editing, pre-fill form with existing win data
-    setTitle(win.title);
-    setCategory(win.category);
-    setReflection(win.reflection);
-  }
-}, [win]);  // Dependency array ensures it runs when 'win' changes
+  if (!win) return;   // If editing, pre-fill form with existing win data, ?? allows for null value changes
+    setTitle(win.title ?? "");
+    setCategory(win.category ?? "");
+    setReflection(win.reflection ?? "");
+  
+}, []);  // Dependency array ensures it runs when 'win' changes
 
 // =========================== 
 // ====== Save function ====== 

@@ -52,8 +52,8 @@ router.get("/", async (req, res) => {
       // Find win by ID and update it
       const updatedWin = await Win.findByIdAndUpdate(
         req.params.id, // ID from URL
-        req.body,      // New data
-        { new: true }  // Return updated document
+        { $set: req.body},      // New data - $set means only update provided fields
+        { new: true, runValidators: true }  // Return updated document, prevent invalid data
       );
   
       // If no win was found with that ID
