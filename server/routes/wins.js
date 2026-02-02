@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
       // Find all - sort newest first
       const wins = await Win.find().sort({ created_at: -1 });
       // Send back as JSON
-      res.status.json(wins);
+      res.status(200).json(wins);
     } catch (err) {
       // Server error if something goes wrong
       console.error("GET /wins error:", err);

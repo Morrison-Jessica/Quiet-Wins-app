@@ -92,7 +92,7 @@ export const useAPI = <T,>(endpoint: string) => {
   // ======= DELETE ITEM ========
   // ============================
   const deleteData = async (id: string) => {
-    try {
+    try { 
       await fetch(`${API_BASE}${endpoint}/${id}`, {
         method: "DELETE",
       });
