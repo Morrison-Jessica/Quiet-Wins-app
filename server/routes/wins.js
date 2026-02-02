@@ -22,6 +22,23 @@ router.get("/", async (req, res) => {
       res.status(500).json({ message: "Failed to fetch wins", error: err.message });
     }
   });
+
+// ======================
+// ==== GET by id ======= 
+// ======================
+router.get("/:id", async (req, res) => {
+  try {
+    const win = await Win.findById(req.params.id); // Find _id
+    if (!win) {
+      return res.status(404).json({ message: "Win not found" });
+    }
+    res.status(200).json(win);
+  } catch (err) {
+    console.error("GET /wins/:id error:", err);
+    const message = err?.message || String(err);
+    res.status(500).json({ message: "Failed to fetch win", error: message });
+  }
+});
   
   
   // ======================
