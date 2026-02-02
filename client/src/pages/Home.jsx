@@ -11,10 +11,25 @@ function Home() {
 // ====================
 // ==== Fetch wins ====
 // ==================== 
-  const fetchWins = async () => {
-    const res = await fetch(API_URL); // Calls GET /api/wins
-    const data = await res.json(); // Convert to JSON
-    setWins(data); // Save to state
+  const fetchWins = async () => {  // updates state after deleting
+    // const res = await fetch(API_URL); // Calls GET /api/wins
+    // const data = await res.json(); // Convert to JSON
+    // setWins(data); // Save state
+    try {
+      const res = await fetch(API_URL);
+  
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("GET /wins failed:", res.status, text);
+        return;
+      }
+  
+      const data = await res.json();
+      setWins(data);
+    } catch (err) {
+      console.error("fetchWins crashed:", err);
+    }
+
   };
 
   // Runs once on component mount
@@ -25,10 +40,22 @@ function Home() {
 // =====================
 // ==== Delete wins ====
 // ===================== 
+// updated behave like error handling
 const deleteWin = async (id) => { // Use win ID
-    await fetch(`${API_URL}/${id}`, { method: 'DELETE' }); // Calls DELETE /api/wins/:id
-    // Refresh list
-    fetchWins();
+  try {
+    const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });  // checks response
+    if (!response.ok) throw new Error(`Failed to delete win. Status: ${response.status}`);
+
+      // Only parse JSON if response has JSON content
+      if (response.headers.get("content-type")?.includes("application/json")) {
+        const data = await response.json();
+        console.log("Deleted win:", data);
+      }
+    fetchWins(); // update state function
+  } catch (error) {
+    console.error("Error deleting win:", error);
+    alert("Could not delete win. Check console for details.");
+  } 
   };
 
   return ( // Home page structure

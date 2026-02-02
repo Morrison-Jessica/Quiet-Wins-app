@@ -14,12 +14,12 @@ router.get("/", async (req, res) => {
     try {
       // Find all - sort newest first
       const wins = await Win.find().sort({ created_at: -1 });
-  
       // Send back as JSON
-      res.json(wins);
+      res.status.json(wins);
     } catch (err) {
       // Server error if something goes wrong
-      res.status(500).json({ error: "Failed to fetch wins" });
+      console.error("GET /wins error:", err);
+      res.status(500).json({ message: "Failed to fetch wins", error: err.message });
     }
   });
   
@@ -39,7 +39,7 @@ router.get("/", async (req, res) => {
       res.status(201).json(savedWin);
     } catch (err) {
       // Error if validation fails
-      res.status(400).json({ error: "Failed to create win" });
+      res.status(400).json({ message: "Failed to create win", error: err.message });
     }
   });
   
@@ -58,14 +58,14 @@ router.get("/", async (req, res) => {
   
       // If no win was found with that ID
       if (!updatedWin) {
-        return res.status(404).json({ error: "Win not found" });
+        return res.status(404).json({ message: "Win not found" });
       }
   
       // Send updated win back
       res.json(updatedWin);
     } catch (err) {
       // Error for invalid ID or request
-      res.status(400).json({ error: "Failed to update win" });
+      res.status(400).json({ message: "Failed to update win", error: err.message });
     }
   });
   
@@ -80,14 +80,14 @@ router.get("/", async (req, res) => {
   
       // If no win was found with that ID
       if (!deletedWin) {
-        return res.status(404).json({ error: "Win not found" });
+        return res.status(404).json({ message: "Win not found" });
       }
   
-      // Confirms delete 
-      res.json({ message: "Win deleted" });
+      // Confirms delete & returns deleted win
+      res.status(200).json({ message: "Win deleted", deletedWin });
     } catch (err) {
-      // Error for invalid ID
-      res.status(400).json({ error: "Failed to delete win" });
+      // Error for invalid ID (400) means client sent bad data. Changed to (500) for server/db failure. Message updated.
+      res.status(500).json({ message: "Failed to delete win", error: err.message });
     }
   });
   
