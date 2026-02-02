@@ -9,6 +9,12 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 // Import win routes
 import winRoutes from "./routes/wins.js";
+// Import auth middleware
+import requireAuth from "./middleware/requireAuth.js"
+import authRoutes from "./routes/auth.js";
+
+
+
 // Load environment variables from .env
 dotenv.config();
 // Connect to MongoDB once at server start
@@ -34,15 +40,19 @@ app.use(
 // Parse incoming JSON data
 app.use(express.json());
 
+app.use("/api/auth", authRoutes);
+
+
 // ============================
 // ========== Routes ==========
 // ============================
 // Win-related routes start with /api/wins
 app.use("/api/wins", winRoutes);
+app.use("/api/auth", authRouter);
 
-// Test route
-app.get("/", (req, res) => {
-  res.send("Quiet Wins API is running");
+// NEW PROTECTED Test route
+app.get("/api/protected", requireAuth, (req, res) => {
+  res.json({ message: "Congrats! You can see this because you're logged in." });
 });
 
 // ==================================
