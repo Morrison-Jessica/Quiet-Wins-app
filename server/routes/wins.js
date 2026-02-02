@@ -3,9 +3,19 @@
 import express from "express";
 // Import Win model to interact with MongoDB
 import Win from "../models/Win.js";
+import { requireAuth } from "../middleware/requireAuth.js";  // Import auth guard
+
 
 // Create a new router instance
 const router = express.Router();
+
+
+router.get("/", requireAuth, async (req, res) => {
+  // route REQUIRES authentication
+  const wins = await Win.find();
+  res.json(wins);
+});
+
 
 // ======================
 // ==== GET all wins ====
